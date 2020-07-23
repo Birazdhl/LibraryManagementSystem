@@ -17,10 +17,33 @@ export default class BookStore {
   @observable loadingInitial = false;
   @observable submitting = false;
   @observable target = "";
+  @observable status = "all";
 
   @computed get getAvailableBooks() {
     return Array.from(this.bookRegistry.values());
   }
+
+  @computed get filterValues() {
+    if (this.status === "all") {
+      return Array.from(this.bookRegistry.values());
+    } else if (this.status === "requested") {
+      var bookList = Array.from(this.bookRegistry.values());
+      var list = bookList.filter((data) => data.isRequested == true);
+      return list;
+    } else if (this.status === "available") {
+      var bookList = Array.from(this.bookRegistry.values());
+      var list = bookList.filter((data) => data.isAvailable == true);
+      return list;
+    } else {
+      var bookList = Array.from(this.bookRegistry.values());
+      var list = bookList.filter((data) => data.isTaken == true);
+      return list;
+    }
+  }
+
+  @action setStatus = (status: string) => {
+    this.status = status;
+  };
 
   @action loadBooks = async () => {
     this.loadingInitial = true;

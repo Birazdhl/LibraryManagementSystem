@@ -12,9 +12,10 @@ import { id } from 'date-fns/esm/locale';
 const LibrarianManager: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, getAvailableBooks, deleteBook } = rootStore.bookStore;
+    const { loadBooks, getAvailableBooks, deleteBook, setStatus, status, filterValues } = rootStore.bookStore;
 
-    const [status, setStatus] = useState(BooksStatus[0].value);
+    // const [status, setStatus] = useState(BooksStatus[0].value);
+    // const [BookList, setBookList] = useState(getAvailableBooks)
 
     useEffect(() => {
         loadBooks();
@@ -28,10 +29,12 @@ const LibrarianManager: React.FC = () => {
         setStatus(value)
         console.log(value)
 
-        if (value === 'requested') {
-            getAvailableBooks.filter(data => data.isRequested == true)
-            console.log(getAvailableBooks)
-        }
+        // if (value === 'requested') {
+        //     const filteredBooks = getAvailableBooks.filter(data => data.isRequested == true)
+        //     // console.log(filteredBooks)
+        //     // setBookList(filteredBooks);
+        //     // console.log(BookList)
+        // }
     }
 
 
@@ -47,8 +50,7 @@ const LibrarianManager: React.FC = () => {
             />
 
             <Button as={NavLink} to='/addBook' positive content='Add New Book' />
-
-            {getAvailableBooks.map(books => (
+            {filterValues.map(books => (
                 <Segment.Group key={books.bookName}>
                     <Segment>
                         <Item.Group>
