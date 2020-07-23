@@ -20,6 +20,8 @@ import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import BookList from '../../features/Books/BookList';
 import LibrarianManager from '../../features/Books/LibrarianManager';
+import CreateBook from '../../features/Books/CreateBook';
+import EditBook from '../../features/Books/EditBook';
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -57,7 +59,9 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 />
 
                 <Route exact path='/booklist' component={BookList} />
+                <Route path='/addBook' component={CreateBook} />
                 <Route exact path='/manageBooks' component={LibrarianManager} />
+                <Route key={location.key} path='/booksDetail/:id' component={EditBook} />
 
 
                 <Route path='/login' component={LoginForm} />

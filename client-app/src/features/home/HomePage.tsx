@@ -15,22 +15,22 @@ const HomePage = () => {
         <Header as='h1' inverted>
           <Image
             size='massive'
-            src='/assets/logo.png'
+            src='/assets/lib.png'
             alt='logo'
             style={{ marginBottom: 12 }}
           />
-          Reactivities
+          Library Management System
         </Header>
         {isLoggedIn && user ? (
           <Fragment>
             <Header as='h2' inverted content={`Welcome back ${user.displayName}`} />
             <Button as={Link} to='/booklist' size='huge' inverted>
-              Go to activities!
+              Enter into Library
             </Button>
           </Fragment>
         ) : (
             <Fragment>
-              <Header as='h2' inverted content={`Welcome to Reactivitities`} />
+              <Header as='h2' inverted content={`Welcome to Insight Library`} />
               <Button onClick={() => openModal(<LoginForm />)} size='huge' inverted>
                 Login
           </Button>

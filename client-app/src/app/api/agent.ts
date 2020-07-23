@@ -3,7 +3,7 @@ import { IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
-import { IBooks } from "../models/books";
+import { IBooks, IBookNameAndId } from "../models/books";
 
 axios.defaults.baseURL = "https://localhost:44396/api";
 
@@ -67,6 +67,10 @@ const Activities = {
 
 const Books = {
   list: (): Promise<IBooks[]> => requests.get("/Book/GetBookList"),
+  create: (book: string) => requests.get(`/Book/CreateBook/${book}`),
+  details: (id: number) => requests.get(`/Book/GetBookById/${id}`),
+  update: (book: IBookNameAndId) => requests.post(`/Book/UpdateBook/`, book),
+  delete: (id: number) => requests.get(`/Book/Delete/${id}`),
 };
 
 const User = {

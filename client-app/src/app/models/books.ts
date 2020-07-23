@@ -10,3 +10,8 @@ export interface IBooks {
   name: string;
   requestedBy: string;
 }
+
+export interface IBookNameAndId {
+  id: number;
+  bookname: string;
+}

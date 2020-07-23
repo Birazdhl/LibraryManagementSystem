@@ -15,25 +15,32 @@ const BookList: React.FC = () => {
 
     return (
         <div>
-            {/* {console.log(getAvailableBooks)} */}
+            <h1>List of Available Books</h1>
             {getAvailableBooks.map(books => (
                 <Segment.Group key={books.bookName}>
                     <Segment>
                         <Item.Group>
                             <Item>
-                                <Item.Image size='tiny' circular src='/assets/user.png' />
+                                <Item.Image size='tiny' circular src='/assets/books.jpg' />
                                 <Item.Content>
                                     <Item.Header as='a'>{books.bookName}</Item.Header>
-                                    <Item.Description>Hosted by Bob</Item.Description>
+                                    <Item.Description>
+                                        <Button loading={false}
+                                            color='green'
+                                            type='button'
+                                            content='Request For Book' />
+
+                                        <Button loading={false}
+                                            color='red'
+                                            type='button'
+                                            content='Cancel Request' />
+
+                                    </Item.Description>
                                 </Item.Content>
                             </Item>
                         </Item.Group>
                     </Segment>
-                    <Segment>
-                        <Icon name='clock' />
-                        <Icon name='marker' />
-                    </Segment>
-                    <Segment secondary>Attendees will go here</Segment>
+
                     <Segment clearing>
                         <span></span>
                         {/* <Button

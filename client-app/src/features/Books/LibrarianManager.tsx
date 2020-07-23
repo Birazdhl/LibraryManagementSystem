@@ -1,26 +1,53 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, SyntheticEvent, useState } from 'react'
 import { observer } from 'mobx-react-lite';
-import { Dropdown, Segment, Item, Icon, Label, Button } from 'semantic-ui-react';
+import { Dropdown, Segment, Item, Icon, Label, Button, Select } from 'semantic-ui-react';
 import { BooksStatus } from '../../app/common/options/BookStatus';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { format } from 'date-fns';
+import { NavLink } from 'react-router-dom';
+import { id } from 'date-fns/esm/locale';
 
 
 
 const LibrarianManager: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, getAvailableBooks } = rootStore.bookStore;
+    const { loadBooks, getAvailableBooks, deleteBook } = rootStore.bookStore;
+
+    const [status, setStatus] = useState(BooksStatus[0].value);
 
     useEffect(() => {
         loadBooks();
     }, [loadBooks]);
 
+    const deleteBooks = (event: SyntheticEvent<HTMLButtonElement>, id: number) => {
+        deleteBook(event, id);
+    };
+
+    const onChange = (value: any) => {
+        setStatus(value)
+        console.log(value)
+
+        if (value === 'requested') {
+            getAvailableBooks.filter(data => data.isRequested == true)
+            console.log(getAvailableBooks)
+        }
+    }
+
 
     return (
         <div>
-            <Dropdown placeholder='Books Status' search selection options={BooksStatus} defaultValue={BooksStatus[0].value} />
-            {console.log(getAvailableBooks)}
+            {/* <Dropdown placeholder='Books Status' id="status" search selection
+                options={BooksStatus} value={status} onChange={(e) => setStatus(e.target.)} /> */}
+
+            <Select
+                value={status}
+                onChange={(e, data) => onChange(data.value)}
+                options={BooksStatus}
+            />
+
+            <Button as={NavLink} to='/addBook' positive content='Add New Book' />
+
             {getAvailableBooks.map(books => (
                 <Segment.Group key={books.bookName}>
                     <Segment>
@@ -28,7 +55,7 @@ const LibrarianManager: React.FC = () => {
                             <Item>
                                 <Item.Image size='tiny' circular src='/assets/books.jpg' />
                                 <Item.Content>
-                                    <Item.Header as='a'>{books.bookName}</Item.Header>
+                                    <Item.Header as={NavLink} to={`/booksDetail/${books.id}`} >{books.bookName}</Item.Header>
                                     <Item.Description>
                                         <Label basic color={books.name ? 'red' : books.requestedBy ? 'yellow' : 'green'}>
                                             {books.name ? 'Taken by ' + books.name :
@@ -36,6 +63,13 @@ const LibrarianManager: React.FC = () => {
                                                     'Available '
                                             }
                                         </Label>
+                                        <Button
+                                            onClick={(e) => deleteBooks(e, books.id)}
+                                            floated='right'
+                                            type='button'
+                                            content='Delete'
+                                            color='red'
+                                        />
 
                                     </Item.Description>
                                     {/* <Item.Description>Requested by {books.requestedBy ? books.requestedBy : 'No One'}</Item.Description> */}

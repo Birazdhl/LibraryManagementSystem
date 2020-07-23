@@ -36,5 +36,33 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{book}")]
+        public async Task<ActionResult> CreateBook(string book)
+        {
+            var result = await _bookService.CreateBook(book);
+            return Ok(book);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await _bookService.DeleteBook(id);
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<Activity>>> GetBookById(int id)
+        {
+            var result = await _bookService.GetBookById(id);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateBook(BookNameandIdViewModel bookViewModel)
+        {
+            var result = await _bookService.UpdateBook(bookViewModel);
+            return Ok(bookViewModel.bookName);
+        }
+
     }
 }

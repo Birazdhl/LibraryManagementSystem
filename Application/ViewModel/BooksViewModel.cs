@@ -5,10 +5,13 @@ using System.Text;
 
 namespace Application.ViewModel
 {
-    public class BooksViewModel
+    public class BookNameandIdViewModel
     {
         public int Id { get; set; }
         public string bookName { get; set; }
+    }
+    public class BooksViewModel : BookNameandIdViewModel
+    {
         public string Name { get; set; }
         public DateTime? issuedOn { get; set; }
         public DateTime? returnDate { get; set; }
@@ -17,8 +20,6 @@ namespace Application.ViewModel
         public bool isRequested { get; set; }
         public bool isReturned { get; set; }
         public string requestedBy { get; set; }
-
-
 
     }
 }
