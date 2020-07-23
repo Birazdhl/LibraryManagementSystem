@@ -3,6 +3,7 @@ import { IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
+import { IBooks } from "../models/books";
 
 axios.defaults.baseURL = "https://localhost:44396/api";
 
@@ -64,6 +65,10 @@ const Activities = {
   delete: (id: string) => requests.del(`/activities/DeleteAtivity/${id}`),
 };
 
+const Books = {
+  list: (): Promise<IBooks[]> => requests.get("/Book/GetBookList"),
+};
+
 const User = {
   current: (): Promise<IUser> => requests.get("/user"),
   login: (user: IUserFormValues): Promise<IUser> =>
@@ -75,4 +80,5 @@ const User = {
 export default {
   Activities,
   User,
+  Books,
 };

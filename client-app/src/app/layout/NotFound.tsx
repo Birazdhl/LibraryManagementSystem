@@ -10,7 +10,7 @@ const NotFound = () => {
                 Oops - we've looked everywhere but couldn't find this.
             </Header>
             <Segment.Inline>
-                <Button as={Link} to='/activities' primary>
+                <Button as={Link} to='/booklist' primary>
                     Return to Activities page
                 </Button>
             </Segment.Inline>

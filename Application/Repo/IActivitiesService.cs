@@ -14,5 +14,6 @@ namespace Application.Repo
         Task<AccountResult> CreateActivity(Activity activity);
         Task<AccountResult> EditActivity(Activity activity);
         Task<AccountResult> DeleteActivity(Guid id);
+
     }
 }

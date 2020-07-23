@@ -78,9 +78,10 @@ namespace API
                          };
                      });
 
-            services.AddScoped<IActivitiesService, ActivitiesService>();
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IActivitiesService, ActivitiesService>();
+            services.AddScoped<IBookRepository, BookRepository>();
 
 
         }

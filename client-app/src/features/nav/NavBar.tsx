@@ -14,7 +14,7 @@ const NavBar: React.FC = () => {
           <img src='/assets/logo.png' alt='logo' style={{ marginRight: 10 }} />
           Reactivities
         </Menu.Item>
-        <Menu.Item name='Activities' as={NavLink} to='/activities' />
+        <Menu.Item name='Activities' as={NavLink} to='/booklist' />
         <Menu.Item>
           <Button
             as={NavLink}
@@ -22,6 +22,10 @@ const NavBar: React.FC = () => {
             positive
             content='Create Activity'
           />
+
+          <Button as={NavLink} to='/manageBooks' positive content='Manage Books'>
+
+          </Button>
         </Menu.Item>
         {user && (
           <Menu.Item position='right'>

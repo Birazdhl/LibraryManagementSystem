@@ -18,7 +18,8 @@ import LoginForm from '../../features/user/LoginForm';
 import { RootStoreContext } from '../stores/rootStore';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
-import { BookList } from '../../features/Books/BookList';
+import BookList from '../../features/Books/BookList';
+import LibrarianManager from '../../features/Books/LibrarianManager';
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -56,6 +57,8 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 />
 
                 <Route exact path='/booklist' component={BookList} />
+                <Route exact path='/manageBooks' component={LibrarianManager} />
+
 
                 <Route path='/login' component={LoginForm} />
                 <Route component={NotFound} />
