@@ -13,6 +13,7 @@ namespace Application.ViewModel
     public class BooksViewModel : BookNameandIdViewModel
     {
         public string Name { get; set; }
+        public string Email { get; set; }
         public DateTime? issuedOn { get; set; }
         public DateTime? returnDate { get; set; }
         public bool isAvailable { get; set; }

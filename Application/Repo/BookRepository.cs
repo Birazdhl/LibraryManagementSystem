@@ -37,11 +37,16 @@ namespace Application.Repo
         public async Task<List<BooksViewModel>> GetBookList()
         {
             List<BooksViewModel> bookList = new List<BooksViewModel>();
+            SendEmail newMail = new SendEmail();
+            SendEmailViewModel emailViewModel = new SendEmailViewModel()
+            {
+                subject = "Book Submission Deadline Over",
+            };
 
             using (IDbConnection conn = Connection)
             {
                 string query =
-                    "select Books.Id,bookName, AspNetUsers.UserName as 'Name',anu.UserName as 'requestedBy', issuedOn, returnDate,isAvailable,isTaken, isRequested, isReturned from Books " + 
+                    "select Books.Id,bookName, AspNetUsers.UserName as 'Name', AspNetUsers.Email as 'Email', anu.UserName as 'requestedBy', issuedOn, returnDate,isAvailable,isTaken, isRequested, isReturned from Books " + 
                     "left join AspNetUsers on Books.issuedBy = AspNetUsers.ID " +
                     "Left join AspNetUsers anu on Books.requestedBy = anu.ID ";
                 conn.Open();
@@ -49,7 +54,14 @@ namespace Application.Repo
 
                 foreach (var result in results)
                 {
+                    if (DateTime.Now > result.returnDate)
+                    {
+                        emailViewModel.requestorName = result.Name;
+                        emailViewModel.requestorEmail = result.Email;
+                        emailViewModel.Message = emailViewModel.requestorName + ", \n The deadline for the book has exceeded. Please return the book on time ";
 
+                        newMail.SendMail(emailViewModel);
+                    }
                 }
 
                 return results.ToList();
