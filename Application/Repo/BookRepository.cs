@@ -45,8 +45,15 @@ namespace Application.Repo
                     "left join AspNetUsers on Books.issuedBy = AspNetUsers.ID " +
                     "Left join AspNetUsers anu on Books.requestedBy = anu.ID ";
                 conn.Open();
-                var result = await conn.QueryAsync<BooksViewModel>(query);
-                return result.ToList();
+                var results = await conn.QueryAsync<BooksViewModel>(query);
+
+                foreach (var result in results)
+                {
+
+                }
+
+                return results.ToList();
+
             }
         }
 
@@ -128,6 +135,11 @@ namespace Application.Repo
             throw new Exception("Problem Saving Changes");
 
 
+        }
+
+        private void ReminderEmailForBookReturn()
+        {
+            
         }
 
 

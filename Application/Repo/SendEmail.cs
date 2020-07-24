@@ -1,26 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Mail;
 using System.Text;
+//using MailKit.Net.Smtp;
+//using MailKit;
+//using MimeKit;
+
+using System.Net;
+using System.Net.Mail;
+using Application.Interface;
+using Application.User;
+using Microsoft.AspNetCore.Identity;
+using Application.Result;
+using System.Threading.Tasks;
+using Domain;
+using Application.ViewModel;
 
 namespace Application.Repo
 {
     public class SendEmail
     {
-        public void SendMailToUser() 
+  
+
+        public void SendMail(SendEmailViewModel email)
         {
-            SmtpClient smtpClient = new SmtpClient("mail.MyWebsiteDomainName.com", 25);
 
-            smtpClient.Credentials = new System.Net.NetworkCredential("bdahal@sevadev.com", "best1nseva");
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.EnableSsl = true;
-            MailMessage mail = new MailMessage();
+            var fromAddress = new MailAddress("birazdhl@gmail.com", "Biraz Dahal");
+            var toAddress = new MailAddress(email.requestorEmail, email.requestorName);
+            const string fromPassword = "beth3change";
+            string subject = email.subject;
+            string body = email.Message;
 
-            //Setting From , To and CC
-            mail.From = new MailAddress("bdahal@sevadev.com", "Biraz Dahal");
-            mail.To.Add(new MailAddress("birazdhl@gmail.com"));
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+                Timeout = 20000
+            };
 
-            smtpClient.Send(mail);
-        } 
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
+        }
+        
     }
+
 }

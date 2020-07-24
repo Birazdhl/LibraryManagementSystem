@@ -1,6 +1,9 @@
 ﻿using Application.Errors;
+using Application.Interface;
 using Application.Result;
 using Application.ViewModel;
+using Domain;
+using Microsoft.AspNetCore.Identity;
 using Persistence;
 using System;
 using System.Collections.Generic;
@@ -13,15 +16,20 @@ namespace Application.Repo
     public class BookStatus : IBookStatus
     {
         private readonly DataContext _dataContext;
+        private readonly IUserAccessor _userAccessor;
+        private readonly UserManager<AppUser> _userManager;
 
-        public BookStatus(DataContext dataContext)
+        public BookStatus(DataContext dataContext,IUserAccessor userAccessor, UserManager<AppUser> userManager)
         {
             _dataContext = dataContext;
+            _userAccessor = userAccessor;
+            _userManager = userManager;
         }
 
         public async Task<AccountResult> MakeABookRequest(BookStatusViewModel statusViewModel)
         {
             var resultMessage = new AccountResult();
+
 
             var book = await _dataContext.Books.FindAsync(statusViewModel.BookId);
 
@@ -54,7 +62,16 @@ namespace Application.Repo
 
         public async Task<AccountResult> ApproveRejectRequest(RequestRejectViewModel reqRejViewModel)
         {
+
             var resultMessage = new AccountResult();
+            
+            SendEmail newMail = new SendEmail();
+
+            SendEmailViewModel sendEmail = new SendEmailViewModel()
+            {
+                requestorEmail = reqRejViewModel.emailAddress,
+                requestorName = reqRejViewModel.name
+            };
 
             var book = await _dataContext.Books.FindAsync(reqRejViewModel.id);
 
@@ -72,8 +89,10 @@ namespace Application.Repo
                 book.isTaken = true;
                 book.issuedBy = null;
 
-                SendEmail newMail = new SendEmail();
-                newMail.SendMailToUser();
+                sendEmail.subject = "Book Request Accepted";
+                sendEmail.Message = sendEmail.requestorName + " , Your request for the book " + 
+                                    reqRejViewModel.bookName + "is Approved" +
+                                    "The Submission Deadline for the Book is " + book.returnDate;
             }
             else
             {
@@ -86,12 +105,24 @@ namespace Application.Repo
                 book.isTaken = false;
                 book.issuedBy = null;
                 book.requestedBy = null;
+
+                sendEmail.subject = "Book Request Rejected";
+                sendEmail.Message = sendEmail.requestorName + " , Your request for the book " + reqRejViewModel.bookName + "is Rejected";
             }
 
             var success = _dataContext.SaveChanges() > 0;
 
+            try
+            {
+                newMail.SendMail(sendEmail);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
             if (success)
-                return resultMessage;
+              return resultMessage;
 
             throw new Exception("Problem Saving Changes");
         }
