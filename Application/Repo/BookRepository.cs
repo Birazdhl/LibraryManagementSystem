@@ -46,7 +46,7 @@ namespace Application.Repo
             using (IDbConnection conn = Connection)
             {
                 string query =
-                    "select Books.Id,bookName, AspNetUsers.UserName as 'Name', AspNetUsers.Email as 'Email', anu.UserName as 'requestedBy', issuedOn, returnDate,isAvailable,isTaken, isRequested, isReturned from Books " + 
+                    "select Books.Id,bookName, AspNetUsers.UserName as 'Name', AspNetUsers.Email as 'Email', anu.UserName as 'requestedBy', anu.Email as 'requestedEmail', issuedOn, returnDate,isAvailable,isTaken, isRequested, isReturned from Books " + 
                     "left join AspNetUsers on Books.issuedBy = AspNetUsers.ID " +
                     "Left join AspNetUsers anu on Books.requestedBy = anu.ID ";
                 conn.Open();

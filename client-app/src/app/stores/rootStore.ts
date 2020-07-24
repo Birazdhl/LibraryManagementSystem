@@ -20,7 +20,7 @@ export class RootStore {
     this.userStore = new UserStore(this);
     this.commonStore = new CommonStore(this);
     this.modalStore = new ModalStore(this);
-    this.bookStore = new BookStore(this);
+    this.bookStore = new BookStore(this, this.userStore);
   }
 }
 

@@ -1,14 +1,15 @@
 export interface IBooks {
   id: number;
-  bookname: string;
+  bookName: string;
   issuedOn: Date;
   returnDate: Date;
   isReturned: boolean;
   isRequested: boolean;
   isAvailable: boolean;
   isTaken: boolean;
-  name: string;
+  Name: string;
   requestedBy: string;
+  requestedEmail: string;
 }
 
 export interface IBookNameAndId {

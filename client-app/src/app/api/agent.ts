@@ -4,6 +4,7 @@ import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
 import { IBooks, IBookNameAndId } from "../models/books";
+import { IBookRequestStatus, IRequestReject } from "../models/bookStatus";
 
 axios.defaults.baseURL = "https://localhost:44396/api";
 
@@ -73,6 +74,17 @@ const Books = {
   delete: (id: number) => requests.get(`/Book/Delete/${id}`),
 };
 
+const BookStatus = {
+  sendRequest: (bookStatus: IBookRequestStatus) =>
+    requests.post("/BookStatus/MakeABookRequest", bookStatus),
+
+  approveRejectRequest: (bookStatus: IRequestReject) =>
+    requests.post("/BookStatus/ApproveRejectRequest", bookStatus),
+
+  bookSubmitedByUser: (id: number) =>
+    requests.get(`/BookStatus/BookSubmittedByUser/${id}`),
+};
+
 const User = {
   current: (): Promise<IUser> => requests.get("/user"),
   login: (user: IUserFormValues): Promise<IUser> =>
@@ -85,4 +97,5 @@ export default {
   Activities,
   User,
   Books,
+  BookStatus,
 };

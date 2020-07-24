@@ -1,23 +1,48 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, SyntheticEvent } from 'react'
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
-import { Segment, Item, Icon, Button } from 'semantic-ui-react';
-import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
+import { Segment, Item, Icon, Button, Label, Select } from 'semantic-ui-react';
+import { BooksStatus } from '../../app/common/options/BookStatus';
+
 
 const BookList: React.FC = () => {
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, getAvailableBooks } = rootStore.bookStore;
+    const {
+        loadBooks,
+        submitting,
+        requestCancelBook,
+        // getAvailableAndRequestedBooks,
+        filterValues,
+        target,
+        returnSubmittedBook } = rootStore.bookStore;
 
     useEffect(() => {
         loadBooks();
     }, [loadBooks]);
 
+    const onRequestClick = (e: SyntheticEvent<HTMLButtonElement>, requestType: string, id: number) => {
+        requestCancelBook(e, requestType, id)
+    }
+
+    const returnBook = (e: SyntheticEvent<HTMLButtonElement>, id: number) => {
+        returnSubmittedBook(e, id)
+    }
+
+    // const onChange = (value: any) => {
+    //     setUserBookListValue(value)
+    // }
+
     return (
         <div>
-            <h1>List of Available Books</h1>
-            {getAvailableBooks.map(books => (
-                <Segment.Group key={books.bookName}>
+            {/* <Select
+                value={userBookListValue}
+                onChange={(e, data) => onChange(data.value)}
+                options={BooksStatus}
+            /> */}
+
+            <h1>List of Books</h1>
+            {filterValues.map(books => (
+                <Segment.Group key={books.id}>
                     <Segment>
                         <Item.Group>
                             <Item>
@@ -25,15 +50,37 @@ const BookList: React.FC = () => {
                                 <Item.Content>
                                     <Item.Header as='a'>{books.bookName}</Item.Header>
                                     <Item.Description>
-                                        <Button loading={false}
-                                            color='green'
-                                            type='button'
-                                            content='Request For Book' />
+                                        {books.isRequested ?
+                                            <Button
+                                                name={books.bookName}
+                                                loading={target === books.bookName && submitting}
+                                                onClick={(e) => onRequestClick(e, 'cancel', books.id)}
+                                                color='red'
+                                                type='button'
+                                                content='Cancel Request' />
+                                            :
+                                            books.isTaken
+                                                ? <div>
+                                                    <Label basic color='red' >This book is taken By you</Label>
+                                                    <Button
+                                                        name={`return${books.bookName}`}
+                                                        loading={target === ('return' + books.bookName) && submitting}
+                                                        color='brown'
+                                                        onClick={(e) => returnBook(e, books.id)}
+                                                        type='button'
+                                                        content='Return this Book'
+                                                    />
+                                                </div>
+                                                :
+                                                <Button
+                                                    name={books.bookName}
+                                                    loading={target === books.bookName && submitting}
+                                                    onClick={(e) => onRequestClick(e, 'request', books.id)}
+                                                    color='green'
+                                                    type='button'
+                                                    content='Request For Book' />}
 
-                                        <Button loading={false}
-                                            color='red'
-                                            type='button'
-                                            content='Cancel Request' />
+
 
                                     </Item.Description>
                                 </Item.Content>
@@ -43,13 +90,6 @@ const BookList: React.FC = () => {
 
                     <Segment clearing>
                         <span></span>
-                        {/* <Button
-                            as={Link}
-                            to={`/activities/${activity.id}`}
-                            floated='right'
-                            content='View'
-                            color='blue'
-                        /> */}
                     </Segment>
                 </Segment.Group>
             ))}

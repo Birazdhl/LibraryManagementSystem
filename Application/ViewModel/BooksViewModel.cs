@@ -21,6 +21,7 @@ namespace Application.ViewModel
         public bool isRequested { get; set; }
         public bool isReturned { get; set; }
         public string requestedBy { get; set; }
+        public string requestedEmail { get; set; }
 
     }
 }

@@ -1,21 +1,20 @@
 import React, { useContext, useEffect, SyntheticEvent, useState } from 'react'
 import { observer } from 'mobx-react-lite';
-import { Dropdown, Segment, Item, Icon, Label, Button, Select } from 'semantic-ui-react';
+import { Segment, Item, Icon, Label, Button, Select } from 'semantic-ui-react';
 import { BooksStatus } from '../../app/common/options/BookStatus';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { format } from 'date-fns';
 import { NavLink } from 'react-router-dom';
 import { id } from 'date-fns/esm/locale';
+import { IRequestReject } from '../../app/models/bookStatus';
+import { IBooks } from '../../app/models/books';
 
 
 
 const LibrarianManager: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, getAvailableBooks, deleteBook, setStatus, status, filterValues } = rootStore.bookStore;
-
-    // const [status, setStatus] = useState(BooksStatus[0].value);
-    // const [BookList, setBookList] = useState(getAvailableBooks)
+    const { loadBooks, deleteBook, setStatus, status, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
 
     useEffect(() => {
         loadBooks();
@@ -27,40 +26,36 @@ const LibrarianManager: React.FC = () => {
 
     const onChange = (value: any) => {
         setStatus(value)
-        console.log(value)
-
-        // if (value === 'requested') {
-        //     const filteredBooks = getAvailableBooks.filter(data => data.isRequested == true)
-        //     // console.log(filteredBooks)
-        //     // setBookList(filteredBooks);
-        //     // console.log(BookList)
-        // }
     }
 
-    const dateNow = new Date();
+    const bookReturn = () => {
+        console.log("Lionel");
+    }
+
+    const approveRejectRequest = (e: SyntheticEvent<HTMLButtonElement>, book: IBooks, appReq: string) => {
+
+        var bookStatus: IRequestReject = {
+            id: book.id,
+            bookname: book.bookName,
+            approveorreject: appReq,
+            returndate: 15,
+            name: book.requestedBy,
+            emailAddress: book.requestedEmail
+        };
+        approveRejectRequests(e, bookStatus)
+        // console.log(book)
+    }
 
     const timeDiff = (t2: Date) => {
-
         if (!(t2 instanceof Date)) t2 = new Date(t2);
-
         const t1 = new Date();
-
-        console.log(t1.getFullYear())
-        console.log(t2.getMonth())
-
-
         const dateDiff = Math.floor(t2.getTime() - t1.getTime());
         var day = 1000 * 60 * 60 * 24
-
-
         return Math.floor(dateDiff / day);
     }
 
     return (
         <div>
-            {/* <Dropdown placeholder='Books Status' id="status" search selection
-                options={BooksStatus} value={status} onChange={(e) => setStatus(e.target.)} /> */}
-
             <Select
                 value={status}
                 onChange={(e, data) => onChange(data.value)}
@@ -69,7 +64,7 @@ const LibrarianManager: React.FC = () => {
 
             <Button as={NavLink} to='/addBook' positive content='Add New Book' />
             {filterValues.map(books => (
-                <Segment.Group key={books.bookName}>
+                <Segment.Group key={books.id}>
                     <Segment>
                         <Item.Group>
                             <Item>
@@ -83,16 +78,17 @@ const LibrarianManager: React.FC = () => {
                                                     'Available '
                                             }
                                         </Label>
+                                        {books.name && <Button onClick={() => bookReturn()} type='button' content={`Returned By ${books.name}`} size='small' />}
                                         <Button
                                             onClick={(e) => deleteBooks(e, books.id)}
                                             floated='right'
                                             type='button'
                                             content='Delete'
                                             color='red'
+                                            size='small'
                                         />
 
                                     </Item.Description>
-                                    {/* <Item.Description>Requested by {books.requestedBy ? books.requestedBy : 'No One'}</Item.Description> */}
                                 </Item.Content>
                             </Item>
                         </Item.Group>
@@ -101,24 +97,32 @@ const LibrarianManager: React.FC = () => {
                         <Segment>
                             <Icon name='clock' /> Expiry Date :- {format(books.returnDate, 'eeee do MMMM')}
                             <Icon name='hourglass start' />Remaining Time:- {timeDiff(books.returnDate)}
-                            {
-                                // console.log(books.returnDate.getTime() - dateNow.getTime())
-                            }
+
                         </Segment> : null
                     }
                     {
                         books.requestedBy ?
                             <Segment>
 
-                                <Button loading={false}
+                                <Button
+                                    name={`approve${books.bookName}`}
+                                    loading={target === ('approve' + books.bookName) && submitting}
                                     color='green'
                                     type='button'
-                                    content='Approve Request' />
+                                    onClick={(e) => approveRejectRequest(e, books, 'approve')}
+                                    content='Approve Request'
+                                    size='small' />
 
-                                <Button loading={false}
+                                <Button
+                                    name={`reject${books.bookName}`}
+                                    loading={target === ('reject' + books.bookName) && submitting}
                                     color='red'
                                     type='button'
-                                    content='Disapprove Request' /> </Segment> : null
+                                    onClick={(e) => approveRejectRequest(e, books, 'reject')}
+                                    content='Disapprove Request'
+                                    size='small' />
+
+                            </Segment> : null
 
                     }
                     <Segment clearing>

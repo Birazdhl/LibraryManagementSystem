@@ -14,7 +14,6 @@ namespace Application.ViewModel
     public class RequestRejectViewModel
     {
         public int id { get; set; }
-
         public string bookName { get; set; }
         public string approveOrReject { get; set; }
         public int returnDate { get; set; }
