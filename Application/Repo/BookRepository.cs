@@ -37,10 +37,6 @@ namespace Application.Repo
         public async Task<List<BooksViewModel>> GetBookList()
         {
             List<BooksViewModel> bookList = new List<BooksViewModel>();
-            //bookList = db.Query<BooksViewModel>(
-            //    "select bookName, AspNetUsers.UserName as 'Name', issuedOn, returnDate,isAvailable,isTaken, isRequested " +
-            //    "from Books left join AspNetUsers on Books.issuedBy = AspNetUsers.ID").ToList();
-            //return bookList;
 
             using (IDbConnection conn = Connection)
             {
@@ -133,5 +129,7 @@ namespace Application.Repo
 
 
         }
+
+
     }
 }

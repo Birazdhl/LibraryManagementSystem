@@ -82,7 +82,7 @@ namespace API
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IActivitiesService, ActivitiesService>();
             services.AddScoped<IBookRepository, BookRepository>();
-
+            services.AddScoped<IBookStatus, BookStatus>();
 
         }
 
