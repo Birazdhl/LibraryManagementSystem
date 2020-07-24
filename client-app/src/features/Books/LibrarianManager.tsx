@@ -37,6 +37,24 @@ const LibrarianManager: React.FC = () => {
         // }
     }
 
+    const dateNow = new Date();
+
+    const timeDiff = (t2: Date) => {
+
+        if (!(t2 instanceof Date)) t2 = new Date(t2);
+
+        const t1 = new Date();
+
+        console.log(t1.getFullYear())
+        console.log(t2.getMonth())
+
+
+        const dateDiff = Math.floor(t2.getTime() - t1.getTime());
+        var day = 1000 * 60 * 60 * 24
+
+
+        return Math.floor(dateDiff / day);
+    }
 
     return (
         <div>
@@ -82,6 +100,10 @@ const LibrarianManager: React.FC = () => {
                     {books.name ?
                         <Segment>
                             <Icon name='clock' /> Expiry Date :- {format(books.returnDate, 'eeee do MMMM')}
+                            <Icon name='hourglass start' />Remaining Time:- {timeDiff(books.returnDate)}
+                            {
+                                // console.log(books.returnDate.getTime() - dateNow.getTime())
+                            }
                         </Segment> : null
                     }
                     {
