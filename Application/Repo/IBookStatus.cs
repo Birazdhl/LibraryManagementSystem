@@ -11,5 +11,7 @@ namespace Application.Repo
     {
         Task<AccountResult> MakeABookRequest(BookStatusViewModel statusViewModel);
         Task<AccountResult> ApproveRejectRequest(RequestRejectViewModel reqRejViewModel);
+
+        Task<AccountResult> BookReturnedByUser(int id);
     }
 }

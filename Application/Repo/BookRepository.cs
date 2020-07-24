@@ -52,7 +52,7 @@ namespace Application.Repo
                 conn.Open();
                 var results = await conn.QueryAsync<BooksViewModel>(query);
 
-                foreach (var result in results)
+                foreach (var result in results) 
                 {
                     if (DateTime.Now > result.returnDate)
                     {
@@ -148,12 +148,6 @@ namespace Application.Repo
 
 
         }
-
-        private void ReminderEmailForBookReturn()
-        {
-            
-        }
-
 
     }
 }

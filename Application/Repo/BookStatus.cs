@@ -126,5 +126,40 @@ namespace Application.Repo
 
             throw new Exception("Problem Saving Changes");
         }
+
+        public async Task<AccountResult> BookReturnedByUser(int id)
+        {
+            var resultMessage = new AccountResult();
+            var book = await _dataContext.Books.FindAsync(id);
+
+            var recordHistory = new RecordHistory()
+            {
+                BookId = book.Id,
+                ReceiverId = book.issuedBy,
+                TakenOn = book.issuedOn,
+                Deadline = book.returnDate,
+                ReturnDate = DateTime.Now,
+                DaysDelayed = (book.returnDate.Value.Day - DateTime.Now.Day)
+            };
+
+             _dataContext.RecordHistory.Add(recordHistory);
+
+            book.issuedOn = null;
+            book.returnDate = null;
+            book.isReturned = true;
+            book.issuedBy = null;
+            book.isRequested = false;
+            book.isAvailable = true;
+            book.isTaken = false;
+            book.requestedBy = null;
+
+            var success =  _dataContext.SaveChanges() > 0;
+
+            if (success)
+                return resultMessage;
+
+            throw new Exception("Problem Saving Changes");
+
+        }
     }
 }

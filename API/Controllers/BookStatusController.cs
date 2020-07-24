@@ -34,5 +34,12 @@ namespace API.Controllers
             await _bookStatus.ApproveRejectRequest(reqRejViewModel);
             return Ok();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> BookSubmittedByUser(int id)
+        {
+            await _bookStatus.BookReturnedByUser(id);
+            return Ok(); 
+        }
     }
 }
