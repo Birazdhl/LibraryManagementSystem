@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Menu, Container, Button, Dropdown, Image } from 'semantic-ui-react';
+import { Menu, Container, Dropdown, Image } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { NavLink, Link } from 'react-router-dom';
 import { RootStoreContext } from '../../app/stores/rootStore';
@@ -14,18 +14,7 @@ const NavBar: React.FC = () => {
           <img src='/assets/lib.png' alt='logo' style={{ marginRight: 10 }} />
           Library Management System
         </Menu.Item>
-        {/* <Menu.Item name='Activities' as={NavLink} to='/booklist' /> */}
         <Menu.Item>
-          {/* <Button
-            as={NavLink}
-            to='/createActivity'
-            positive
-            content='Create Activity'
-          /> */}
-
-          {/* <Button as={NavLink} to='/manageBooks' positive content='Manage Books'>
-
-          </Button> */}
         </Menu.Item>
         {user && (
           <Menu.Item position='right'>

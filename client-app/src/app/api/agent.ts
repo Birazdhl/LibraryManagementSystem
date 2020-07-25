@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
@@ -60,16 +59,6 @@ const requests = {
   del: (url: string) => axios.delete(url).then(sleep(1000)).then(responseBody),
 };
 
-const Activities = {
-  list: (): Promise<IActivity[]> => requests.get("/activities/GetActivityList"),
-  details: (id: string) => requests.get(`/activities/GetActivity/${id}`),
-  create: (activity: IActivity) =>
-    requests.post("/activities/EditActivity", activity),
-  update: (activity: IActivity) =>
-    requests.put(`/activities/EditActivity/${activity.id}`, activity),
-  delete: (id: string) => requests.del(`/activities/DeleteAtivity/${id}`),
-};
-
 const Books = {
   list: (): Promise<IBooks[]> => requests.get("/Book/GetBookList"),
   create: (book: string) => requests.get(`/Book/CreateBook/${book}`),
@@ -101,7 +90,6 @@ const User = {
 };
 
 export default {
-  Activities,
   User,
   Books,
   BookStatus,

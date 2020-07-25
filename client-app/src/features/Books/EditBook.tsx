@@ -1,21 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Segment, Form, Button, Grid } from 'semantic-ui-react';
-import { ActivityFormValues } from '../../app/models/activity';
-import { v4 as uuid } from 'uuid';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../app/common/form/TextInput';
-import TextAreaInput from '../../app/common/form/TextAreaInput';
-import SelectInput from '../../app/common/form/SelectInput';
-import DateInput from '../../app/common/form/DateInput';
-import { category } from '../../app/common/options/categoryOptions';
-import { combineDateAndTime } from '../../app/common/util/util';
 import {
-    combineValidators,
-    isRequired,
-    composeValidators,
-    hasLengthGreaterThan
+    combineValidators, isRequired,
 } from 'revalidate';
 import { RootStoreContext } from '../../app/stores/rootStore';
 
