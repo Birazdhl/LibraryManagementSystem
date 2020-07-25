@@ -33,8 +33,14 @@ export default class UserStore {
   @action register = async (values: IUserFormValues) => {
     try {
       const user = await agent.User.register(values);
+      {
+        console.log("Lionel");
+      }
       this.rootStore.commonStore.setToken(user.token);
       this.rootStore.modalStore.closeModal();
+      runInAction(() => {
+        this.user = user;
+      });
       history.push("/booklist");
     } catch (error) {
       throw error;
