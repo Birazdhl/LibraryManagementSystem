@@ -34,40 +34,40 @@ const RegisterForm = () => {
         pristine,
         dirtySinceLastSubmit
       }) => (
-        <Form onSubmit={handleSubmit} error>
-          <Header
-            as='h2'
-            content='Sign up to Reactivities'
-            color='teal'
-            textAlign='center'
-          />
-          <Field name='username' component={TextInput} placeholder='Username' />
-          <Field
-            name='displayName'
-            component={TextInput}
-            placeholder='Display Name'
-          />
-          <Field name='email' component={TextInput} placeholder='Email' />
-          <Field
-            name='password'
-            component={TextInput}
-            placeholder='Password'
-            type='password'
-          />
-          {submitError && !dirtySinceLastSubmit && (
-            <ErrorMessage
-              error={submitError}
+          <Form onSubmit={handleSubmit} error>
+            <Header
+              as='h2'
+              content='Sign up to Library Manager'
+              color='teal'
+              textAlign='center'
             />
-          )}
-          <Button
-            disabled={(invalid && !dirtySinceLastSubmit) || pristine}
-            loading={submitting}
-            color='teal'
-            content='Register'
-            fluid
-          />
-        </Form>
-      )}
+            <Field name='username' component={TextInput} placeholder='Username' />
+            <Field
+              name='displayName'
+              component={TextInput}
+              placeholder='Display Name'
+            />
+            <Field name='email' component={TextInput} placeholder='Email' />
+            <Field
+              name='password'
+              component={TextInput}
+              placeholder='Password'
+              type='password'
+            />
+            {submitError && !dirtySinceLastSubmit && (
+              <ErrorMessage
+                error={submitError}
+              />
+            )}
+            <Button
+              disabled={(invalid && !dirtySinceLastSubmit) || pristine}
+              loading={submitting}
+              color='teal'
+              content='Register'
+              fluid
+            />
+          </Form>
+        )}
     />
   );
 };

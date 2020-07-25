@@ -12,3 +12,13 @@ export interface IRequestReject {
   name: string;
   emailAddress: string;
 }
+
+export interface IRecordHistory {
+  id: number;
+  bookname: string;
+  takenBy: string;
+  takenOn: Date;
+  returnDate: Date;
+  deadline: Date;
+  daysDelayed: number;
+}

@@ -69,7 +69,7 @@ const CreateBookForm: React.FC<RouteComponentProps<DetailParams>> = ({
                                     content='Submit'
                                 />
                                 <Button
-                                    onClick={() => history.push(`/manageBooks`)}
+                                    onClick={() => history.push(`/booklist`)}
                                     disabled={loading}
                                     floated='right'
                                     type='button'

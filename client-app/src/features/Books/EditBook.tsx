@@ -90,7 +90,7 @@ const EditBook: React.FC<RouteComponentProps<IdParams>> = ({
                                 />
                                 <Button
                                     onClick={
-                                        () => history.push(`/manageBooks`)
+                                        () => history.push(`/booklist`)
                                     }
                                     disabled={loading}
                                     floated='right'

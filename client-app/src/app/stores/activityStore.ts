@@ -43,7 +43,7 @@ export default class ActivityStore {
     this.loadingInitial = true;
     try {
       const activities = await agent.Activities.list();
-      runInAction("loading activities", () => {
+      runInAction("loading books", () => {
         activities.forEach((activity) => {
           activity.date = new Date(activity.date);
           this.activityRegistry.set(activity.id, activity);
@@ -51,7 +51,7 @@ export default class ActivityStore {
         this.loadingInitial = false;
       });
     } catch (error) {
-      runInAction("load activities error", () => {
+      runInAction("load books error", () => {
         this.loadingInitial = false;
       });
     }

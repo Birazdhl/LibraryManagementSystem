@@ -23,6 +23,7 @@ import LibrarianManager from '../../features/Books/LibrarianManager';
 import CreateBook from '../../features/Books/CreateBook';
 import EditBook from '../../features/Books/EditBook';
 import BookDashboard from '../../features/Books/BookDashboard';
+import BookRecord from '../../features/Books/BookRecord';
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -51,17 +52,18 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
             <NavBar />
             <Container style={{ marginTop: '7em' }}>
               <Switch>
-                {/* <Route exact path='/activities' component={ActivityDashboard} />
+                <Route exact path='/activities' component={ActivityDashboard} />
                 <Route path='/activities/:id' component={ActivityDetails} />
                 <Route
                   key={location.key}
                   path={['/createActivity', '/manage/:id']}
                   component={ActivityForm}
-                /> */}
+                />
 
                 <Route exact path='/booklist' component={BookDashboard} />
                 <Route path='/addBook' component={CreateBook} />
                 <Route exact path='/manageBooks' component={LibrarianManager} />
+                <Route exact path='/recordBook' component={BookRecord} />
                 <Route key={location.key} path='/booksDetail/:id' component={EditBook} />
 
 

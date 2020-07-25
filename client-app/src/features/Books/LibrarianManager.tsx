@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, SyntheticEvent, useState } from 'react'
 import { observer } from 'mobx-react-lite';
-import { Segment, Item, Icon, Label, Button, Select } from 'semantic-ui-react';
+import { Segment, Item, Icon, Label, Button, Select, Dropdown } from 'semantic-ui-react';
 import { BooksStatus } from '../../app/common/options/BookStatus';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { format } from 'date-fns';
@@ -9,13 +9,14 @@ import { id } from 'date-fns/esm/locale';
 
 import { IRequestReject } from '../../app/models/bookStatus';
 import { IBooks } from '../../app/models/books';
+import LoadingComponent from '../../app/layout/LoadingComponent';
 
 
 
 const LibrarianManager: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, deleteBook, setStatus, status, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
+    const { loadBooks, deleteBook, setStatus, loadingInitial, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
 
     useEffect(() => {
         loadBooks();
@@ -29,10 +30,6 @@ const LibrarianManager: React.FC = () => {
         setStatus(value)
     }
 
-    const bookReturn = () => {
-        console.log("Lionel");
-    }
-
     const approveRejectRequest = (e: SyntheticEvent<HTMLButtonElement>, book: IBooks, appReq: string) => {
 
         var bookStatus: IRequestReject = {
@@ -44,7 +41,6 @@ const LibrarianManager: React.FC = () => {
             emailAddress: book.requestedEmail
         };
         approveRejectRequests(e, bookStatus)
-        // console.log(book)
     }
 
     const timeDiff = (t2: Date) => {
@@ -55,9 +51,16 @@ const LibrarianManager: React.FC = () => {
         return Math.floor(dateDiff / day);
     }
 
+
+    if (loadingInitial)
+        return <LoadingComponent content='Loading books' />;
+
+
     return (
         <div>
             <Button as={NavLink} to='/addBook' className='addBook' positive content='Add New Book' />
+            <Button as={NavLink} to='/recordBook' className='record' positive content='See Book Record' />
+
             {filterValues.map(books => (
                 <Segment.Group key={books.id}>
                     <Segment>
@@ -73,14 +76,15 @@ const LibrarianManager: React.FC = () => {
                                                     'Available '
                                             }
                                         </Label>
-                                        <Button
-                                            onClick={(e) => deleteBooks(e, books.id)}
-                                            floated='right'
-                                            type='button'
-                                            content='Delete'
-                                            color='red'
-                                            size='small'
-                                        />
+                                        {books.isAvailable &&
+                                            < Button
+                                                onClick={(e) => deleteBooks(e, books.id)}
+                                                floated='right'
+                                                type='button'
+                                                content='Delete'
+                                                color='red'
+                                                size='small'
+                                            />}
 
                                     </Item.Description>
                                 </Item.Content>

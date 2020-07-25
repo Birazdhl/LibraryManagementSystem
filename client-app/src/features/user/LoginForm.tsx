@@ -32,35 +32,35 @@ const LoginForm = () => {
         pristine,
         dirtySinceLastSubmit
       }) => (
-        <Form onSubmit={handleSubmit} error>
-          <Header
-            as='h2'
-            content='Login to Reactivities'
-            color='teal'
-            textAlign='center'
-          />
-          <Field name='email' component={TextInput} placeholder='Email' />
-          <Field
-            name='password'
-            component={TextInput}
-            placeholder='Password'
-            type='password'
-          />
-          {submitError && !dirtySinceLastSubmit && (
-            <ErrorMessage
-              error={submitError}
-              text='Invalid email or password'
+          <Form onSubmit={handleSubmit} error>
+            <Header
+              as='h2'
+              content='Login to Library Manager'
+              color='teal'
+              textAlign='center'
             />
-          )}
-          <Button
-            disabled={(invalid && !dirtySinceLastSubmit) || pristine}
-            loading={submitting}
-            color='teal'
-            content='Login'
-            fluid
-          />
-        </Form>
-      )}
+            <Field name='email' component={TextInput} placeholder='Email' />
+            <Field
+              name='password'
+              component={TextInput}
+              placeholder='Password'
+              type='password'
+            />
+            {submitError && !dirtySinceLastSubmit && (
+              <ErrorMessage
+                error={submitError}
+                text='Invalid email or password'
+              />
+            )}
+            <Button
+              disabled={(invalid && !dirtySinceLastSubmit) || pristine}
+              loading={submitting}
+              color='teal'
+              content='Login'
+              fluid
+            />
+          </Form>
+        )}
     />
   );
 };

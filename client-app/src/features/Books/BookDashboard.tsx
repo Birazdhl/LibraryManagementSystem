@@ -1,25 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Select, Segment, Dropdown } from 'semantic-ui-react'
 import { BooksStatus } from '../../app/common/options/BookStatus'
 import { RootStoreContext } from '../../app/stores/rootStore'
 import BookList from './BookList'
 import LibrarianManager from './LibrarianManager'
+import LoadingComponent from '../../app/layout/LoadingComponent'
 
 const BookDashboard: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, deleteBook, setStatus, status, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
+    const { setStatus, status, loadingInitial } = rootStore.bookStore;
+    const { user } = rootStore.userStore;
 
     const onChange = (value: any) => {
         setStatus(value)
     }
-
-    var userRole = 'admin';
-
     return (
         <div>
-
             <Dropdown
                 selectOnNavigation={false}
                 selection
@@ -28,7 +26,7 @@ const BookDashboard: React.FC = () => {
                 value={status}
                 onChange={(e, data) => onChange(data.value)}
             />
-            {userRole === 'user' ? <BookList /> : <LibrarianManager />}
+            {user!.username === 'admin' ? <LibrarianManager /> : <BookList />}
 
         </div>
 

@@ -41,5 +41,12 @@ namespace API.Controllers
             await _bookStatus.BookReturnedByUser(id);
             return Ok(); 
         }
+
+        [HttpGet]
+        public async Task<ActionResult> BookHistory()
+        {
+            var result = await _bookStatus.GetBookRecords();
+            return Ok(result);
+        }
     }
 }

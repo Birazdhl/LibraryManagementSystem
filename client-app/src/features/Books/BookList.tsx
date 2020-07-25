@@ -3,6 +3,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 import { Segment, Item, Icon, Button, Label, Select } from 'semantic-ui-react';
 import { BooksStatus } from '../../app/common/options/BookStatus';
+import LoadingComponent from '../../app/layout/LoadingComponent';
 
 
 const BookList: React.FC = () => {
@@ -11,7 +12,7 @@ const BookList: React.FC = () => {
         loadBooks,
         submitting,
         requestCancelBook,
-        // getAvailableAndRequestedBooks,
+        loadingInitial,
         filterValues,
         target,
         returnSubmittedBook } = rootStore.bookStore;
@@ -31,6 +32,9 @@ const BookList: React.FC = () => {
     // const onChange = (value: any) => {
     //     setUserBookListValue(value)
     // }
+
+    if (loadingInitial)
+        return <LoadingComponent content='Loading books' />;
 
     return (
         <div>

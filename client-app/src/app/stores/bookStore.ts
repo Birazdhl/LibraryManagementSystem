@@ -17,24 +17,14 @@ export default class BookStore {
   }
 
   @observable bookRegistry = new Map();
+  @observable recordRegistry = new Map();
   @observable book: IBooks | null = null;
   @observable loadingInitial = false;
   @observable submitting = false;
   @observable target = "";
   @observable status = "requested";
   @observable sserBookListValue = "taken";
-
-  // @computed get getAvailableAndRequestedBooks() {
-  //   var bookList = Array.from(this.bookRegistry.values());
-  //   console.log(bookList);
-  //   var list = bookList.filter(
-  //     (data) =>
-  //       data.isAvailable == true ||
-  //       data.requestedBy === this.storeUser.user!.username ||
-  //       data.name === this.storeUser.user!.username
-  //   );
-  //   return list;
-  // }
+  @observable recordBookStatus = "all";
 
   @computed get filterValues() {
     if (this.status === "all") {
@@ -86,7 +76,7 @@ export default class BookStore {
         this.loadBooks();
         this.submitting = false;
       });
-      history.push(`/manageBooks`);
+      history.push(`/booklist`);
     } catch (error) {
       runInAction("create book error", () => {
         this.submitting = false;
@@ -132,7 +122,7 @@ export default class BookStore {
         this.loadBooks();
         this.submitting = false;
       });
-      history.push(`/manageBooks`);
+      history.push(`/booklist`);
       toast.success("Book name changed successfully");
     } catch (error) {
       runInAction("edit book error", () => {
@@ -233,5 +223,40 @@ export default class BookStore {
       toast.error("Problem submitting data");
       console.log(error.response);
     }
+  };
+
+  @action bookRecords = async () => {
+    this.loadingInitial = true;
+    try {
+      const records = await agent.BookStatus.booksRecord();
+      runInAction("loading books record", () => {
+        records.forEach((record) => {
+          this.recordRegistry.set(record.id, record);
+        });
+        this.loadingInitial = false;
+        this.submitting = false;
+      });
+    } catch (error) {
+      runInAction("load books record error", () => {
+        this.loadingInitial = false;
+      });
+    }
+  };
+
+  @computed get bookRecordList() {
+    var recordList = Array.from(this.recordRegistry.values());
+    if (this.recordBookStatus === "delayed") {
+      var list = recordList.filter((data) => data.daysDelayed > 0);
+      return list;
+    } else if (this.recordBookStatus === "onTime") {
+      var list = recordList.filter((data) => data.daysDelayed <= 0);
+      return list;
+    } else {
+      return recordList;
+    }
+  }
+
+  @action setBookRecordStatus = (status: string) => {
+    this.recordBookStatus = status;
   };
 }

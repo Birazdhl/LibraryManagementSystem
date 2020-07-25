@@ -29,4 +29,16 @@ namespace Application.ViewModel
         public string Message { get; set; }
 
     }
+
+    public class RecordHistoryViewModel
+    {
+        public int Id { get; set; }
+        public string BookName { get; set; }
+        public string TakenBy { get; set; }
+        public DateTime? TakenOn { get; set; }
+        public DateTime? ReturnDate { get; set; }
+        public DateTime? Deadline { get; set; }
+        public int DaysDelayed { get; set; }
+    }
+
 }

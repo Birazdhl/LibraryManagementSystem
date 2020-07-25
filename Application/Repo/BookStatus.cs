@@ -1,12 +1,19 @@
-﻿using Application.Errors;
+﻿using Application.Activities;
+using Application.Configuration;
+using Application.Errors;
 using Application.Interface;
 using Application.Result;
 using Application.ViewModel;
+using Dapper;
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Persistence;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +25,14 @@ namespace Application.Repo
         private readonly DataContext _dataContext;
         private readonly IUserAccessor _userAccessor;
         private readonly UserManager<AppUser> _userManager;
+
+        public IDbConnection Connection
+        {
+            get
+            {
+                return new SqlConnection(ConfigurationConnection.connectionString);
+            }
+        }
 
         public BookStatus(DataContext dataContext,IUserAccessor userAccessor, UserManager<AppUser> userManager)
         {
@@ -88,6 +103,7 @@ namespace Application.Repo
                 book.isAvailable = false;
                 book.isTaken = true;
                 book.issuedBy = null;
+                book.requestedBy = null;
 
                 sendEmail.subject = "Book Request Accepted";
                 sendEmail.Message = sendEmail.requestorName + " , Your request for the book " + 
@@ -160,6 +176,21 @@ namespace Application.Repo
 
             throw new Exception("Problem Saving Changes");
 
+        }
+
+        public async Task<List<RecordHistoryViewModel>> GetBookRecords()
+        {
+            List<RecordHistoryViewModel> recordList = new List<RecordHistoryViewModel>();
+
+            using (IDbConnection conn = Connection)
+            {
+                string query = (@" select RecordHistory.Id, Books.BookName,AspNetUsers.DisplayName as 'TakenBy',TakenOn, RecordHistory.ReturnDate, DeadLine,DaysDelayed from RecordHistory 
+			                       left join AspNetUsers on AspNetUsers.Id = RecordHistory.ReceiverId
+			                       left join Books on Books.Id = RecordHistory.BookId");
+                conn.Open();
+                var results = await conn.QueryAsync<RecordHistoryViewModel>(query);
+                return results.ToList();
+            }
         }
     }
 }

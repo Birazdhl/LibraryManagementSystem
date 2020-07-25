@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Repo
 {
-    public interface IBookRepository 
+    public interface IBookRepository
     {
         Task<List<BooksViewModel>> GetBookList();
         Task<AccountResult> CreateBook(string bookName);

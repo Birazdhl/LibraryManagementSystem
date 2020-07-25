@@ -4,7 +4,11 @@ import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
 import { IBooks, IBookNameAndId } from "../models/books";
-import { IBookRequestStatus, IRequestReject } from "../models/bookStatus";
+import {
+  IBookRequestStatus,
+  IRequestReject,
+  IRecordHistory,
+} from "../models/bookStatus";
 
 axios.defaults.baseURL = "https://localhost:44396/api";
 
@@ -83,6 +87,9 @@ const BookStatus = {
 
   bookSubmitedByUser: (id: number) =>
     requests.get(`/BookStatus/BookSubmittedByUser/${id}`),
+
+  booksRecord: (): Promise<IRecordHistory[]> =>
+    requests.get("/BookStatus/BookHistory"),
 };
 
 const User = {
