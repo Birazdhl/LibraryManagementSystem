@@ -40,4 +40,13 @@ body {
   font-weight: normal;
 }
 
+.ui.positive.button.addBook {
+  margin-top: 20px;
+  margin-left: 980px;
+}
+
+.ui.selection.dropdown {
+  position: absolute;
+}
+
 /*end home page styles*/

@@ -14,18 +14,18 @@ const NavBar: React.FC = () => {
           <img src='/assets/lib.png' alt='logo' style={{ marginRight: 10 }} />
           Library Management System
         </Menu.Item>
-        <Menu.Item name='Activities' as={NavLink} to='/booklist' />
+        {/* <Menu.Item name='Activities' as={NavLink} to='/booklist' /> */}
         <Menu.Item>
-          <Button
+          {/* <Button
             as={NavLink}
             to='/createActivity'
             positive
             content='Create Activity'
-          />
+          /> */}
 
-          <Button as={NavLink} to='/manageBooks' positive content='Manage Books'>
+          {/* <Button as={NavLink} to='/manageBooks' positive content='Manage Books'>
 
-          </Button>
+          </Button> */}
         </Menu.Item>
         {user && (
           <Menu.Item position='right'>

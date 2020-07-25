@@ -6,6 +6,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 import { format } from 'date-fns';
 import { NavLink } from 'react-router-dom';
 import { id } from 'date-fns/esm/locale';
+
 import { IRequestReject } from '../../app/models/bookStatus';
 import { IBooks } from '../../app/models/books';
 
@@ -56,13 +57,7 @@ const LibrarianManager: React.FC = () => {
 
     return (
         <div>
-            <Select
-                value={status}
-                onChange={(e, data) => onChange(data.value)}
-                options={BooksStatus}
-            />
-
-            <Button as={NavLink} to='/addBook' positive content='Add New Book' />
+            <Button as={NavLink} to='/addBook' className='addBook' positive content='Add New Book' />
             {filterValues.map(books => (
                 <Segment.Group key={books.id}>
                     <Segment>
@@ -78,7 +73,6 @@ const LibrarianManager: React.FC = () => {
                                                     'Available '
                                             }
                                         </Label>
-                                        {books.name && <Button onClick={() => bookReturn()} type='button' content={`Returned By ${books.name}`} size='small' />}
                                         <Button
                                             onClick={(e) => deleteBooks(e, books.id)}
                                             floated='right'
