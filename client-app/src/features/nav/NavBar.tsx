@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Menu, Container, Dropdown, Image } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { RootStoreContext } from '../../app/stores/rootStore';
 
 const NavBar: React.FC = () => {

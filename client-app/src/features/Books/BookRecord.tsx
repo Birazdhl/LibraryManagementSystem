@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
-import { Table, Dropdown, Segment, Button } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../app/layout/LoadingComponent';
+import { Dropdown, Button } from 'semantic-ui-react';
 
 const BookRecord: React.FC<RouteComponentProps> = ({ history }) => {
 
@@ -69,7 +69,6 @@ const BookRecord: React.FC<RouteComponentProps> = ({ history }) => {
 
             <Button
                 onClick={() => history.push(`/booklist`)}
-                // disabled={loading}
                 floated='right'
                 type='button'
                 content='Back'

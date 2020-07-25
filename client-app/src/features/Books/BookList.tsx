@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, SyntheticEvent } from 'react'
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
-import { Segment, Item, Icon, Button, Label, Select } from 'semantic-ui-react';
-import { BooksStatus } from '../../app/common/options/BookStatus';
+import { Segment, Item, Button, Label } from 'semantic-ui-react';
 import LoadingComponent from '../../app/layout/LoadingComponent';
 
 

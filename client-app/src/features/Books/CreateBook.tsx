@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Segment, Form, Button, Grid } from 'semantic-ui-react';
-import { v4 as uuid } from 'uuid';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router';
 import { Form as FinalForm, Field } from 'react-final-form';
@@ -30,7 +29,7 @@ const CreateBookForm: React.FC<RouteComponentProps<DetailParams>> = ({
         submitting,
     } = rootStore.bookStore;
 
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
 
     const handleFinalFormSubmit = (values: any) => {
         createBook(values.bookName);

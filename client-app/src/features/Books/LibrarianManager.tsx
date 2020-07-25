@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, SyntheticEvent, useState } from 'react'
+import React, { useContext, useEffect, SyntheticEvent } from 'react'
 import { observer } from 'mobx-react-lite';
-import { Segment, Item, Icon, Label, Button, Select, Dropdown } from 'semantic-ui-react';
-import { BooksStatus } from '../../app/common/options/BookStatus';
+import { Segment, Item, Icon, Label, Button } from 'semantic-ui-react';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import { format } from 'date-fns';
 import { NavLink } from 'react-router-dom';
-import { id } from 'date-fns/esm/locale';
 
 import { IRequestReject } from '../../app/models/bookStatus';
 import { IBooks } from '../../app/models/books';
@@ -16,7 +14,7 @@ import LoadingComponent from '../../app/layout/LoadingComponent';
 const LibrarianManager: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
-    const { loadBooks, deleteBook, setStatus, loadingInitial, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
+    const { loadBooks, deleteBook, loadingInitial, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
 
     useEffect(() => {
         loadBooks();
@@ -25,10 +23,6 @@ const LibrarianManager: React.FC = () => {
     const deleteBooks = (event: SyntheticEvent<HTMLButtonElement>, id: number) => {
         deleteBook(event, id);
     };
-
-    const onChange = (value: any) => {
-        setStatus(value)
-    }
 
     const approveRejectRequest = (e: SyntheticEvent<HTMLButtonElement>, book: IBooks, appReq: string) => {
 
