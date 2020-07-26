@@ -11,6 +11,8 @@ export interface IRequestReject {
   returndate: number;
   name: string;
   emailAddress: string;
+  takenBy: string | undefined;
+  requestedId: string;
 }
 
 export interface IRecordHistory {

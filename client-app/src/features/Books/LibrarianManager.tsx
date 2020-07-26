@@ -15,6 +15,7 @@ const LibrarianManager: React.FC = () => {
 
     const rootStore = useContext(RootStoreContext);
     const { loadBooks, deleteBook, loadingInitial, filterValues, approveRejectRequests, submitting, target } = rootStore.bookStore;
+    const { user } = rootStore.userStore
 
     useEffect(() => {
         loadBooks();
@@ -32,7 +33,9 @@ const LibrarianManager: React.FC = () => {
             approveorreject: appReq,
             returndate: 15,
             name: book.requestedBy,
-            emailAddress: book.requestedEmail
+            emailAddress: book.requestedEmail,
+            takenBy: book.requestedBy,
+            requestedId: book.requestedId
         };
         approveRejectRequests(e, bookStatus)
     }
@@ -60,6 +63,7 @@ const LibrarianManager: React.FC = () => {
                     <Segment>
                         <Item.Group>
                             <Item>
+                                {console.log(books)}
                                 <Item.Image size='tiny' circular src='/assets/books.jpg' />
                                 <Item.Content>
                                     <Item.Header as={NavLink} to={`/booksDetail/${books.id}`} >{books.bookName}</Item.Header>

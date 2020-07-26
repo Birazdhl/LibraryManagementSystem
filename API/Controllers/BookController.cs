@@ -51,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Activity>>> GetBookById(int id)
+        public async Task<ActionResult<List<Books>>> GetBookById(int id)
         {
             var result = await _bookService.GetBookById(id);
             return Ok(result);

@@ -1,5 +1,4 @@
 using API.Middleware;
-using Application.Activities;
 using Application.Interface;
 using Domain;
 using FluentValidation.AspNetCore;
@@ -22,6 +21,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Persistence;
 using System.Text;
 using Application.Repo;
+using System.Collections.Generic;
+using Application.User;
 
 namespace API
 {
@@ -47,7 +48,7 @@ namespace API
                 });
             });
             services.AddControllers();
-            services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddMediatR(typeof(CurrentUser.Handler).Assembly);
 
             services.AddMvc(opt =>
             {
@@ -80,7 +81,6 @@ namespace API
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
-            services.AddScoped<IActivitiesService, ActivitiesService>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookStatus, BookStatus>();
 

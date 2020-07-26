@@ -19,6 +19,8 @@ namespace Application.ViewModel
         public int returnDate { get; set; }
         public string name { get; set; }
         public string emailAddress { get; set; }
+        public string userId { get; set; }
+        public Guid requestedId { get; set; }
     }
 
     public class SendEmailViewModel

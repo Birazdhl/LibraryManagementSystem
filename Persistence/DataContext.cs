@@ -10,9 +10,7 @@ namespace Persistence
         public DataContext(DbContextOptions options) : base(options)
         { }
 
-        public DbSet<Activity> Activities { get; set; }
         public DbSet<Books> Books { get; set; }
-
         public DbSet<RecordHistory> RecordHistory{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

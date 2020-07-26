@@ -1,5 +1,4 @@
-﻿using Application.Activities;
-using Application.Result;
+﻿using Application.Result;
 using Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;

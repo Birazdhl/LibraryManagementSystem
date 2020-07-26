@@ -18,21 +18,21 @@ namespace Persistence
                 {
                     new AppUser
                     {
-                        DisplayName = "Bob",
-                        UserName = "bob",
-                        Email = "bob@test.com"
+                        DisplayName = "Sugat Paneru",
+                        UserName = "gattu",
+                        Email = "spaneru@sevadev.com"
                     },
                      new AppUser
                     {
-                        DisplayName = "Tom",
-                        UserName = "tom",
-                        Email = "tom@test.com"
+                        DisplayName = "Biraj Dahal",
+                        UserName = "birazdhl",
+                        Email = "bdahal@sevadev.com"
                     },
                       new AppUser
                     {
-                        DisplayName = "Jane",
-                        UserName = "jane",
-                        Email = "jane@test.com"
+                        DisplayName = "admin",
+                        UserName = "admin",
+                        Email = "admin@admin.com"
                     }
                 };
 
@@ -42,106 +42,66 @@ namespace Persistence
                 }
             }
 
-            if (!context.Activities.Any())
+            if (!context.Books.Any())
             {
-                var activities = new List<Activity>
-               {
-                    new Activity
+                var books = new List<Books>
+                {
+                    new Books
                     {
-                        Title = "Past Activity 1",
-                        Date = DateTime.Now.AddMonths(-2),
-                        Description = "Activity 2 months ago",
-                        Category = "drinks",
-                        City = "London",
-                        Venue = "Pub",
+                        bookName = "Think and Grow Rich",
+                        isAvailable = true
                     },
-                    new Activity
+                    new Books
                     {
-                        Title = "Past Activity 2",
-                        Date = DateTime.Now.AddMonths(-1),
-                        Description = "Activity 1 month ago",
-                        Category = "culture",
-                        City = "Paris",
-                        Venue = "Louvre",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 1",
-                        Date = DateTime.Now.AddMonths(1),
-                        Description = "Activity 1 month in future",
-                        Category = "culture",
-                        City = "London",
-                        Venue = "Natural History Museum",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 2",
-                        Date = DateTime.Now.AddMonths(2),
-                        Description = "Activity 2 months in future",
-                        Category = "music",
-                        City = "London",
-                        Venue = "O2 Arena",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 3",
-                        Date = DateTime.Now.AddMonths(3),
-                        Description = "Activity 3 months in future",
-                        Category = "drinks",
-                        City = "London",
-                        Venue = "Another pub",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 4",
-                        Date = DateTime.Now.AddMonths(4),
-                        Description = "Activity 4 months in future",
-                        Category = "drinks",
-                        City = "London",
-                        Venue = "Yet another pub",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 5",
-                        Date = DateTime.Now.AddMonths(5),
-                        Description = "Activity 5 months in future",
-                        Category = "drinks",
-                        City = "London",
-                        Venue = "Just another pub",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 6",
-                        Date = DateTime.Now.AddMonths(6),
-                        Description = "Activity 6 months in future",
-                        Category = "music",
-                        City = "London",
-                        Venue = "Roundhouse Camden",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 7",
-                        Date = DateTime.Now.AddMonths(7),
-                        Description = "Activity 2 months ago",
-                        Category = "travel",
-                        City = "London",
-                        Venue = "Somewhere on the Thames",
-                    },
-                    new Activity
-                    {
-                        Title = "Future Activity 8",
-                        Date = DateTime.Now.AddMonths(8),
-                        Description = "Activity 8 months in future",
-                        Category = "film",
-                        City = "London",
-                        Venue = "Cinema",
-                    }
-               };
+                        bookName = "Rich Dad Poor Dad",
+                        isAvailable = true
 
-                context.Activities.AddRange(activities);
+                    },
+                    new Books
+                    {
+                        bookName = "Meessi",
+                        isAvailable = true
+
+                    },
+                    new Books
+                    {
+                        bookName = "Mocking Bird",
+                        isAvailable = true
+                    },
+                    new Books
+                    {
+                        bookName = "Summer Love",
+                        isAvailable = true
+                    },
+                    new Books
+                    {
+                        bookName = "Saaya",
+                        isAvailable = true
+                    },
+                    new Books
+                    {
+                        bookName = "Dark",
+                        isAvailable = true
+                    },
+                    new Books
+                    {
+                        bookName = "Elite",
+                        isAvailable = true
+                    },
+                    new Books
+                    {
+                        bookName = "You Can Win",
+                        isAvailable = true
+                    }
+
+            };
+
+                context.Books.AddRange(books);
                 context.SaveChanges();
 
+
             }
+
         }
     }
 }

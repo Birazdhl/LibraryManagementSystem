@@ -10,6 +10,7 @@ export interface IBooks {
   Name: string;
   requestedBy: string;
   requestedEmail: string;
+  requestedId: string;
 }
 
 export interface IBookNameAndId {

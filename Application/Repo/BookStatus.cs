@@ -1,5 +1,4 @@
-﻿using Application.Activities;
-using Application.Configuration;
+﻿using Application.Configuration;
 using Application.Errors;
 using Application.Interface;
 using Application.Result;
@@ -99,13 +98,12 @@ namespace Application.Repo
                 book.returnDate = book.issuedOn.Value.AddDays(reqRejViewModel.returnDate);
                 book.issuedBy = book.requestedBy;
                 book.isRequested = false;
-                book.isReturned = false;
                 book.isAvailable = false;
                 book.isTaken = true;
-                book.issuedBy = null;
+                book.issuedBy = book.requestedBy;
                 book.requestedBy = null;
 
-                sendEmail.subject = "Book Request Accepted";
+                sendEmail.subject = "Book Request Accepted /n";
                 sendEmail.Message = sendEmail.requestorName + " , Your request for the book " + 
                                     reqRejViewModel.bookName + "is Approved" +
                                     "The Submission Deadline for the Book is " + book.returnDate;
@@ -116,7 +114,6 @@ namespace Application.Repo
                 book.returnDate = null;
                 book.issuedBy = null;
                 book.isRequested = false;
-                book.isReturned = true;
                 book.isAvailable = true;
                 book.isTaken = false;
                 book.issuedBy = null;
@@ -162,7 +159,6 @@ namespace Application.Repo
 
             book.issuedOn = null;
             book.returnDate = null;
-            book.isReturned = true;
             book.issuedBy = null;
             book.isRequested = false;
             book.isAvailable = true;

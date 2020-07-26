@@ -6,6 +6,6 @@ namespace Application.Configuration
 {
     public class ConfigurationConnection
     {
-        public static string connectionString = "Data Source=localhost\\MSSQLSERVER02;Initial Catalog=LibraryManagement;Integrated Security=True";
+        public static string connectionString = "Data Source=localhost\\MSSQLSERVER02;Initial Catalog=InsightLibrary;Integrated Security=True";
     }
 }

@@ -16,6 +16,8 @@ const BookList: React.FC = () => {
         target,
         returnSubmittedBook } = rootStore.bookStore;
 
+    const { user } = rootStore.userStore;
+
     useEffect(() => {
         loadBooks();
     }, [loadBooks]);
@@ -45,56 +47,61 @@ const BookList: React.FC = () => {
 
             <h1>List of Books</h1>
             {filterValues.map(books => (
+
+
+
                 <Segment.Group key={books.id}>
-                    <Segment>
-                        <Item.Group>
-                            <Item>
-                                <Item.Image size='tiny' circular src='/assets/books.jpg' />
-                                <Item.Content>
-                                    <Item.Header as='a'>{books.bookName}</Item.Header>
-                                    <Item.Description>
-                                        {books.isRequested ?
-                                            <Button
-                                                name={books.bookName}
-                                                loading={target === books.bookName && submitting}
-                                                onClick={(e) => onRequestClick(e, 'cancel', books.id)}
-                                                color='red'
-                                                type='button'
-                                                content='Cancel Request' />
-                                            :
-                                            books.isTaken
-                                                ? <div>
-                                                    <Label basic color='red' >This book is taken By you</Label>
-                                                    <Button
-                                                        name={`return${books.bookName}`}
-                                                        loading={target === ('return' + books.bookName) && submitting}
-                                                        color='brown'
-                                                        onClick={(e) => returnBook(e, books.id)}
-                                                        type='button'
-                                                        content='Return this Book'
-                                                    />
-                                                </div>
-                                                :
+                    {(books.name === user!.username || books.name === null) &&
+                        <Segment>
+                            <Item.Group>
+                                <Item>
+                                    {console.log(books)}
+                                    <Item.Image size='tiny' circular src='/assets/books.jpg' />
+                                    <Item.Content>
+                                        <Item.Header as='a'>{books.bookName}</Item.Header>
+                                        <Item.Description>
+                                            {books.isRequested ?
                                                 <Button
                                                     name={books.bookName}
                                                     loading={target === books.bookName && submitting}
-                                                    onClick={(e) => onRequestClick(e, 'request', books.id)}
-                                                    color='green'
+                                                    onClick={(e) => onRequestClick(e, 'cancel', books.id)}
+                                                    color='red'
                                                     type='button'
-                                                    content='Request For Book' />}
+                                                    content='Cancel Request' />
+                                                :
+                                                books.isTaken
+                                                    ? <div>
+                                                        <Label basic color='red' >This book is taken By you</Label>
+                                                        <Button
+                                                            name={`return${books.bookName}`}
+                                                            loading={target === ('return' + books.bookName) && submitting}
+                                                            color='brown'
+                                                            onClick={(e) => returnBook(e, books.id)}
+                                                            type='button'
+                                                            content='Return this Book'
+                                                        />
+                                                    </div>
+                                                    :
+                                                    <Button
+                                                        name={books.bookName}
+                                                        loading={target === books.bookName && submitting}
+                                                        onClick={(e) => onRequestClick(e, 'request', books.id)}
+                                                        color='green'
+                                                        type='button'
+                                                        content='Request For Book' />}
 
 
 
-                                    </Item.Description>
-                                </Item.Content>
-                            </Item>
-                        </Item.Group>
-                    </Segment>
+                                        </Item.Description>
+                                    </Item.Content>
+                                </Item>
+                            </Item.Group>
+                        </Segment>
 
-                    <Segment clearing>
-                        <span></span>
-                    </Segment>
+                    }
                 </Segment.Group>
+
+
             ))}
 
 

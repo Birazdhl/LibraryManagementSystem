@@ -10,7 +10,6 @@ namespace Domain
         public string bookName { get; set; }
         public DateTime? issuedOn { get; set; }
         public DateTime? returnDate { get; set; }
-        public bool isReturned { get; set; }
         public Guid? issuedBy { get; set; }
         public Guid? requestedBy { get; set; }
         public bool isRequested { get; set; }
